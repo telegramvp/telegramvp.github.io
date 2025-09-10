@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram使用指南 - 加好友、加群组、加频道及私聊限制解决</title>
+    <script src="https://cdn.tailwindcss.com/3.3.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: #2d3748;
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px 0 rgba(31, 38, 135, 0.2);
+        }
+        
+        .highlight-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight-text::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(99, 102, 241, 0.2);
+            z-index: -1;
+        }
+        
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+        
+        .shadow-glow {
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+        }
+        
+        .mobile-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            transform-origin: top;
+            transform: scaleY(0);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            z-index: 100;
+        }
+        
+        .mobile-menu.active {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 导航条 -->
+    <nav class="glassmorphism sticky top-0 z-50 p-4 mb-8" id="mainNav">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
+                <i class="fab fa-telegram mr-2"></i>Telegram使用指南
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#add-methods" class="text-gray-600 hover:text-indigo-600 transition-colors">添加方法</a>
+                <a href="#search-bot" class="text-gray-600 hover:text-indigo-600 transition-colors">资源搜索</a>
+                <a href="#privacy-settings" class="text-gray-600 hover:text-indigo-600 transition-colors">私聊限制</a>
+                <a href="#support" class="text-gray-600 hover:text-indigo-600 transition-colors">其他支持</a>
+            </div>
+            <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton" aria-label="导航菜单">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- 移动端导航菜单 -->
+            <div class="mobile-menu md:hidden" id="mobileMenu">
+                <a href="#add-methods" class="text-gray-600 hover:text-indigo-600 transition-colors flex items-center">
+                    <i class="fas fa-user-plus mr-3 text-indigo-500"></i>添加方法
+                </a>
+                <a href="#search-bot" class="text-gray-600 hover:text-indigo-600 transition-colors flex items-center">
+                    <i class="fas fa-search mr-3 text-indigo-500"></i>资源搜索
+                </a>
+                <a href="#privacy-settings" class="text-gray-600 hover:text-indigo-600 transition-colors flex items-center">
+                    <i class="fas fa-lock mr-3 text-indigo-500"></i>私聊限制
+                </a>
+                <a href="#support" class="text-gray-600 hover:text-indigo-600 transition-colors flex items-center">
+                    <i class="fas fa-question-circle mr-3 text-indigo-500"></i>其他支持
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 头部横幅 -->
+    <header class="container mx-auto py-12 px-4 md:px-8 relative">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                Telegram纸飞机电报使用指南
+            </h1>
+            <p class="text-xl text-gray-600 mb-6">怎么加好友，加群组，加频道，和解决双向好友私聊限制</p>
+            <img src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/dqrjibrfceOj7NXnBWhrllw8939CF2QVkWqXQ0ENic6kibic9Uia9VibGLS1edjTrRkP2EZyibxEpmTgVLbeRGevY6rXg/640?wx_fmt=jpeg&watermark=1#imgIndex=0" 
+                 alt="Telegram使用图示" 
+                 class="rounded-xl shadow-lg mx-auto max-w-full h-auto max-h-96">
+        </div>
+    </header>
+
+    <!-- 添加方法部分 -->
+    <section id="add-methods" class="container mx-auto py-8 px-4 md:px-8">
+        <div class="glassmorphism p-6 md:p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white mr-3 shadow-glow">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                一、添加好友、群组和频道的方法
+            </h2>
+            <p class="text-gray-600 mb-6">Telegram中用户、公开群组和公开频道都有唯一的用户名、ID或链接，可通过以下方式添加：</p>
+            
+            <div class="space-y-6">
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">1. 通过唯一ID或链接</h3>
+                    <p class="text-gray-600">将目标ID（如<span class="font-mono bg-gray-100 px-2 py-1 rounded">@tghotso</span>）或公开链接（如<span class="font-mono bg-gray-100 px-2 py-1 rounded">t.me/tghotso</span>）发送到任意会话，点击即可跳转添加。</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">2. 直接搜索</h3>
+                    <p class="text-gray-600">在顶部搜索框输入用户名、ID（如<span class="font-mono bg-gray-100 px-2 py-1 rounded">@tghotso</span>）或关键词，直接查找目标用户、群组或频道。</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">3. 通过手机号搜索</h3>
+                    <p class="text-gray-600">在搜索框输入带国家区号的完整手机号（如中国+86前缀），找到用户后可直接添加好友并私聊。</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">4. 扫描二维码</h3>
+                    <p class="text-gray-600">使用浏览器扫描目标用户、群组或频道的二维码，点击跳转至Telegram添加。</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">5. 通过公开链接访问</h3>
+                    <p class="text-gray-600">在浏览器中打开公开链接（如<span class="font-mono bg-gray-100 px-2 py-1 rounded">t.me/tghotso</span>），点击跳转至Telegram添加目标。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 资源搜索部分 -->
+    <section id="search-bot" class="container mx-auto py-8 px-4 md:px-8">
+        <div class="glassmorphism p-6 md:p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white mr-3 shadow-glow">
+                    <i class="fas fa-search"></i>
+                </div>
+                二、获取资源推荐：极搜搜索机器人
+            </h2>
+            <p class="text-gray-600 mb-6">若刚使用Telegram且缺乏资源，可通过以下步骤使用<strong>极搜搜索机器人</strong>查找群组和频道：</p>
+            
+            <div class="space-y-4">
+                <div class="flex items-start">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 flex-shrink-0">1</div>
+                    <p class="text-gray-600">在任意会话发送<span class="font-mono bg-gray-100 px-2 py-1 rounded">@tghotso</span>并点击，跳转至「极搜-中文搜索频道」。</p>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 flex-shrink-0">2</div>
+                    <p class="text-gray-600">点击频道内的「🔎极搜-中文搜索」按钮，启动搜索机器人。</p>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 flex-shrink-0">3</div>
+                    <p class="text-gray-600">直接输入关键词搜索资源（如"城市名"找同城群组、"视频"找视频资源）。</p>
+                </div>
+                
+                <div class="flex items-start">
+                    <div class="bg-indigo-100 text-indigo-600 rounded-full w-6 h-6 flex items-center justify-center mr-3 mt-1 flex-shrink-0">4</div>
+                    <div>
+                        <p class="text-gray-600 mb-2">其他功能：</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li class="text-gray-600">搜索"中文包"可设置Telegram为中文版；</li>
+                            <li class="text-gray-600">置顶机器人方便后续使用。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 私聊限制部分 -->
+    <section id="privacy-settings" class="container mx-auto py-8 px-4 md:px-8">
+        <div class="glassmorphism p-6 md:p-8 mb-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white mr-3 shadow-glow">
+                    <i class="fas fa-lock"></i>
+                </div>
+                三、解决私聊双向限制问题
+            </h2>
+            <p class="text-gray-600 mb-6">Telegram对私聊有严格风控，频繁操作可能导致限制，解决方法如下：</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">1. 等待自动解除</h3>
+                    <p class="text-gray-600">短期限制通常24小时后自动解除。</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">2. 使用老账号或官方会员</h3>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                        <li>账号使用时间越长，限制越少；</li>
+                        <li>购买官方会员可减少限制（通常一周后生效）。</li>
+                    </ul>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">3. 通过双向私聊机器人沟通</h3>
+                    <p class="text-gray-600">部分用户提供专门的私聊机器人，通过机器人可降低限制风险。</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">4. 申请解除限制</h3>
+                    <p class="text-gray-600">若账号被完全限制，可联系官方<span class="font-mono bg-gray-100 px-2 py-1 rounded">@SpamBot</span>申请解除。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 其他支持部分 -->
+    <section id="support" class="container mx-auto py-8 px-4 md:px-8 mb-12">
+        <div class="glassmorphism p-6 md:p-8">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gradient-primary flex items-center justify-center text-white mr-3 shadow-glow">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                四、其他服务支持
+            </h2>
+            <p class="text-gray-600 mb-6">如需以下帮助，可添加QQ：<span class="font-mono bg-gray-100 px-2 py-1 rounded">3924157244</span></p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">账号问题</h3>
+                    <p class="text-gray-600">账号注册/登录、验证码问题</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">软件安装</h3>
+                    <p class="text-gray-600">软件下载安装（含苹果设备国外ID）</p>
+                </div>
+                
+                <div class="card-hover bg-white p-5 rounded-xl shadow-sm">
+                    <h3 class="text-lg font-semibold mb-3 text-indigo-600">会员服务</h3>
+                    <p class="text-gray-600">会员购买、加速器、谷歌邮箱等</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-50 py-6">
+        <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+            <p>created by <a href="https://space.coze.cn" class="text-indigo-600 hover:text-indigo-800">coze space</a></p>
+            <p>页面内容均由 AI 生成，仅供参考</p>
+        </div>
+    </footer>
+
+    <script>
+        // 添加滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+
+                    // 点击导航链接后关闭移动端菜单
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    if (mobileMenu.classList.contains('active')) {
+                        mobileMenu.classList.remove('active');
+                        // 同时切换图标回汉堡按钮
+                        const menuIcon = document.querySelector('#mobileMenuButton i');
+                        menuIcon.classList.remove('fa-times');
+                        menuIcon.classList.add('fa-bars');
+                    }
+                });
+            });
+
+            // 移动端导航菜单切换
+            const menuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+
+                // 切换图标
+                const icon = this.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // 点击页面其他区域关闭移动端菜单
+            document.addEventListener('click', function(event) {
+                const isClickInsideNav = document.getElementById('mainNav').contains(event.target);
+
+                if (!isClickInsideNav && mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    const icon = menuButton.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
